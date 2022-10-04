@@ -210,5 +210,59 @@ Insert into emp(empno,ename,job)
 values (9001,'홍길동','SALESMAN'); -- NULL값이 있어도 계산 가능
 
 -- 커미션(COMM)을 받는 사람들의 수는
-select count(COMM) as get_commision
-from emp;
+select count(comm) as get_commision
+from emp
+where comm!=0;
+--where comm not 0;
+
+-- 부서별로 인원수, 평균급여, 최저급여, 최고급여, 급여의 합을 구하기
+select deptno, count(*) as 인원수, ceil(avg(sal)) as 평균급여 , min(sal) as 최저급여 ,max(sal) as 최고급여 , sum(sal) as 급여합계
+from emp 
+group by deptno;
+
+-- 부서별로 인원수, 평균급여, 최저급여, 최고급여, 급여의 합을 구하기 ( 부서별 급여의 합이 높은 순으로)
+select deptno, count(*) as 인원수, ceil(avg(sal)) as 평균급여 , min(sal) as 최저급여 ,max(sal) as 최고급여 , sum(sal) as 급여합계
+from emp 
+group by deptno
+order by max(sal) desc;
+
+-- 부서별 업무별 그룹하여 부서번호, 업무, 인원수, 급여의 평균, 급여의 합을 구하기
+SELECT DEPTNO,JOB,COUNT(ENAME) AS 인원수,AVG(SAL) AS AVG,SUM(SAL) AS SUM
+FROM EMP
+GROUP BY DEPTNO,JOB;
+
+
+-- 최대 급여가 2900 이상인 부서에 대해 부서번호, 평균 급여, 급여의 합을 출력
+select deptno, ceil(avg(sal)) as 평균급여, sum(sal) as 급여합계
+from emp 
+group by deptno
+having max(sal) >= 2900;
+
+-- 업무별 급여의 평균이 3000이상인 업무에 대해 업무명, 평균 급여, 급여의 합을 출력
+SELECT JOB, AVG(SAL) AS 평균급여, SUM(SAL) AS 급여합계
+FROM EMP
+GROUP BY JOB
+HAVING AVG(SAL) >= 3000;
+
+
+-- 전체 합계 급여가 5000를 초과하는 각 업무에 대해서 업무와 급여 합계를 출력 
+-- 단, SALESMAN은 제외하고 급여 합계가 높은 순으로 정렬
+Select job, sum(sal) as 급여합계
+from emp
+WHERE JOB NOT IN 'SALESMAN'
+group by job 
+having sum(sal) > 5000
+order by sum(sal) desc;
+
+-- 업무별 최고 급여와 최소 급여의 차이를 구하라
+Select job,(Max(sal) - Min(sal)) as 급여차이
+from emp
+group by job;
+
+-- 부서 인원이 4명 보다 많은 부서의 부서번호, 인원수, 급여의 합을 출력
+Select deptno, count(DEPTNO) as 인원수, sum(sal) as 급여합계
+from emp
+group by deptno
+having count(DEPTNO)>4;
+
+
