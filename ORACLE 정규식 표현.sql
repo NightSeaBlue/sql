@@ -69,6 +69,10 @@ select *
 from reg_tab
 where regexp_like(text,'^[0-9]');
 
+select *
+from reg_tab
+where text between '0' and '9';
+
 -- 6. ¼ıÀÚ°¡ ¾Æ´Ñ ¹®ÀÚ·Î ½ÃÀÛÇÏ´Â µ¥ÀÌÅÍ °Ë»ö
 select *
 from reg_tab
@@ -97,6 +101,10 @@ where regexp_like(text,'^[^[a-z]');
 select *
 from reg_tab
 where regexp_like(text,'^[°¡-ÆR]');
+
+select *
+from reg_tab
+where text between '°¡' and 'ÆR';
 
 -- 10. µ¥ÀÌÅÍ Áß 'gg'³ª 'GG'°¡ µé¾îÀÖ´Â µ¥ÀÌÅÍ °Ë»ö
 select *
