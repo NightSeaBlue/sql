@@ -71,7 +71,7 @@ where regexp_like(text,'^[0-9]');
 
 select *
 from reg_tab
-where text between '0' and '9';
+where substr(text,1,1) between '0' and '9';
 
 -- 6. ¼ýÀÚ°¡ ¾Æ´Ñ ¹®ÀÚ·Î ½ÃÀÛÇÏ´Â µ¥ÀÌÅÍ °Ë»ö
 select *
@@ -82,10 +82,18 @@ select *
 from reg_tab
 where regexp_like(text,'^[^[0-9]');
 
+select *
+from reg_tab
+where not substr(text,1,1) between '0' and '9';
+
 -- 7. ´ë¹®ÀÚ·Î ½ÃÀÛÇÏ´Â µ¥ÀÌÅÍ °Ë»ö
 select *
 from reg_tab
 where regexp_like(text,'^[A-Z]');
+
+select *
+from reg_tab
+where substr(text,1,1) between 'A' and 'Z';
 
 -- 8. ¼Ò¹®ÀÚ ¿ÜÀÇ ¹®ÀÚ·Î ½ÃÀÛÇÏ´Â µ¥ÀÌÅÍ °Ë»ö
 select *
@@ -96,6 +104,10 @@ select *
 from reg_tab
 where regexp_like(text,'^[^[a-z]');
 
+select *
+from reg_tab
+where not substr(text,1,1) between 'a' and 'z';
+
 
 -- 9. ÇÑ±Û·Î ½ÃÀÛÇÏ´Â µ¥ÀÌÅÍ °Ë»ö
 select *
@@ -104,9 +116,14 @@ where regexp_like(text,'^[°¡-ÆR]');
 
 select *
 from reg_tab
-where text between '°¡' and 'ÆR';
+where substr(text,1,1) between '°¡' and 'ÆR';
 
 -- 10. µ¥ÀÌÅÍ Áß 'gg'³ª 'GG'°¡ µé¾îÀÖ´Â µ¥ÀÌÅÍ °Ë»ö
 select *
 from reg_tab
 where regexp_like(text,'gg|GG');
+
+select *
+from reg_tab
+where text like '%gg%' or  text like '%GG%';
+
