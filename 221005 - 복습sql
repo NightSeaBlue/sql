@@ -22,6 +22,12 @@ FROM EMP
 WHERE DEPTNO != 10 AND JOB IN ('SALESMAN','MANAGER')
 GROUP BY JOB,DEPTNO;
 
+SELECT JOB,DEPTNO, SUM(SAL) AS 급여합계, COUNT(*) AS 인원수
+FROM EMP
+WHERE DEPTNO != 10
+GROUP BY JOB,DEPTNO
+HAVING JOB IN ('SALESMAN','MANAGER');
+
 -- 6. 업무별로 평균급여와 최대급여를 출력하되, 평균급여가 2000이상인 것만 출력하고 평균급여가 높은 순으로 정렬
 SELECT FLOOR(AVG(SAL)) AS 평균급여 , MAX(SAL) AS 최대급여
 FROM EMP
@@ -40,12 +46,22 @@ FROM EMP
 GROUP BY CEIL(ROWNUM/5);
 
 -- 9. 다음과 같이 출력
-SELECT count (decode(job,'CLERK',1)) AS CLERK ,COUNT (decode(job,'SALESMAN',1)) AS SALESMAN , COUNT(decode(job,'MANAGER',1)) AS MANAGER
+SELECT count (decode(job,'CLERK',2)) AS CLERK ,COUNT (decode(job,'SALESMAN',2)) AS SALESMAN , COUNT(decode(job,'MANAGER',2)) AS MANAGER
 FROM EMP;
 
+select job,count (*) as count
+from emp
+group by job
+having count(*)>2;
+
 -- 10. 다음과 같이 업무별, 부서별 출력
-select job,nvl(sum(decode(deptno,10,sal)),0) as "10번부서", nvl(sum(decode(deptno,20,sal)),0) as "20번부서" ,nvl(sum(decode(deptno,30,sal)),0) as "30번부서", sum(sal) as 급여합계
+select job as 업무명,nvl(sum(decode(deptno,10,sal)),0) as "10번부서", nvl(sum(decode(deptno,20,sal)),0) as "20번부서" ,nvl(sum(decode(deptno,30,sal)),0) as "30번부서", sum(sal) as 급여합계
 from emp
 group by job;
+
+select job,deptno,sum(sal) as 급여합계
+from emp
+group by job, deptno
+having deptno in (10,20,30);
 
 
