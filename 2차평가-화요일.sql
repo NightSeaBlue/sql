@@ -1,0 +1,49 @@
+-- 1번 답
+/*
+ *	oracle : 1521
+ *  ms-sql : 1433
+ *  my-sql : 3306
+ * 
+ * /
+
+-- 2번 답
+
+/*
+*	Alter User SCOTT identified by TIGER;
+*	
+*/
+
+-- 3번 답
+
+/*
+ *	conn /as SYSDBA  
+ *
+ * 	Create User SCOTT identified by 1234;
+ *  
+ * 	Grant DBA to SCOTT ; 
+ * 
+ * 
+ */
+
+
+
+-- 4번 
+CREATE TABLE SCOTT.EMP (
+	ENO 	NUMBER(4)
+	ENAME 	VARCHAR2(10)
+	JOB		VARCHAR2(9)
+	MANAGER	NUMBER(4)
+	HIREDATE	DATE
+	SALARY	NUMBER(7,2)
+	COMMISSION	NUMBER(7,2)
+	DNO	NUMBER(2)
+	CONSTRAINTS PK_SCOTT.EMP_ENO PRIMARY KEY (ENO)
+	CONSTRAINTS FK_SCOTT.EMP_DNO FOREIGN KEY (DNO) REFERENCES SCOTT.DEPT(DNO)
+	
+);
+
+CREATE TABLE SCOTT.DEPT (
+	DNO		NUMBER(2)
+	DNAME 	VARCHAR2(14)
+	LOC 	VARCHAR2(13)
+);

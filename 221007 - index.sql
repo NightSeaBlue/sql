@@ -1,0 +1,32 @@
+-- index 확인
+SELECT INDEX_NAME, INDEX_TYPE
+FROM USER_INDEXES
+WHERE table_name = 'EMPLOYEES';
+
+SELECT EMPLOYEE_ID,first_name,last_name,phone_number
+FROM EMPLOYEES
+WHERE salary=3000;
+
+SELECT EMPLOYEE_ID,first_name,last_name,phone_number FROM EMPLOYEES
+WHERE EMPLOYEE_ID =8000;
+
+CREATE INDEX idx_emp_salary ON employees(salary);
+
+COMMIT;
+
+SELECT e.empno AS "직무번호",e.ename,e.sal,d.dname,d.loc 
+FROM emp e LEFT OUTER JOIN dept d
+			ON e.deptno = d.DEPTNO
+WHERE e.deptno = 20;
+
+SELECT COUNT(E1.ENAME)
+FROM EMP E1 , EMP E2
+WHERE E1.JOB = E2.JOB;
+
+SELECT E2.ENAME,E2.SAL,E2.EMPNO
+FROM (SELECT MIN(SAL) FROM EMP GROUP BY DEPTNO) E1 , EMP E2
+WHERE E1.ENAME = E2.ENAME;
+			
+
+SELECT*FROM emp;
+

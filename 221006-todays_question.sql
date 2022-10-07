@@ -112,23 +112,18 @@ from ex_order e left outer join ex_good g
                 on e.gno = g.gno
 group by e.id,e.orderno;                
                 
--- 4. 3번에 주문 내역을 첫번째 상품명 외 몇 개로 출력 (나중에 풀기)
-select e.orderno, g.gname||' 외 '||(e.count -1)||'개' as 주문내역
-   
+-- 4. 3번에 주문 내역을 첫번째 상품명 외 몇 개로 출력 (나중에 풀기) 
+select e.orderno, g.gname||' 외 '||(e.COUNT-1)||'개' as 주문내역
+from (select orderno, count(orderno) as COUNT ,min(gno) as 최소주문수 from ex_order group by orderno) e 
+        left outer join ex_good g
+                on e.최소주문수 = G.GNO
+order by e.orderno;
 
-select orderno, count(orderno),min(gno) from ex_order group by orderno;
-
-select e.orderno, g.gname||' 외 '||(e.count -1)||'개' as 주문내역
-from ex_order e left outer join ex_good g
-                on e.gno = g.gno
-
-select e.orderno, g.gname||' 외 '||(e.count -1)||'개' as 주문내역
-from (select orderno, count(orderno),min(gno) from ex_order group by orderno) e
-        ,ex_good g
-where e.gno = g.gno;
+-- 주문번호에 따른 정보 파악
+select orderno, count(orderno) as COUNT ,min(gno) as GNO from ex_order group by orderno;
 
 -- 4번 정답
-SELECT E.ORDERNO, G.GNAME ||' 외'||(E.COUNT-1)||'개' GOOD
+SELECT E.ORDERNO, G.GNAME ||' 외 '||(E.COUNT-1)||'개' GOOD
 FROM (SELECT ORDERNO, MIN(GNO) GNO, COUNT(ORDERNO) COUNT
 FROM EX_ORDER GROUP BY ORDERNO) E, EX_GOOD G
 WHERE E.GNO=G.GNO;
